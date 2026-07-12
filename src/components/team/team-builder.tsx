@@ -66,7 +66,7 @@ function DraggableMember({ member }: { member: SeedMember }) {
             {member.skills.slice(0, 2).map((s) => s.name).join(" · ")}
           </div>
         </div>
-        <span className="font-mono text-xs text-text-soft shrink-0">{member.internalRating}</span>
+        <span className="font-mono text-xs text-text-soft shrink-0">{member.skills.length} skill</span>
       </div>
     </div>
   );
@@ -204,12 +204,6 @@ export function TeamBuilder() {
   }
 
   const filledSlots = slots.filter((s) => s.memberId);
-  const teamRating = filledSlots.reduce((sum, s) => {
-    const m = SEED_MEMBERS.find((mm) => mm.id === s.memberId);
-    return sum + (m?.internalRating ?? 0);
-  }, 0);
-  const avgRating = filledSlots.length > 0 ? Math.round(teamRating / filledSlots.length) : 0;
-
 
   return (
     <DndContext
@@ -283,18 +277,11 @@ export function TeamBuilder() {
           <div className="mt-5 card p-4">
             <div className="flex items-center justify-between mb-3">
               <h3 className="text-sm font-medium text-text">Takım özeti</h3>
-              {filledSlots.length > 0 && (
-                <span className="font-mono text-sm text-text">ortalama {avgRating}</span>
-              )}
             </div>
             <div className="grid grid-cols-2 gap-3 text-[13px]">
               <div>
                 <div className="text-text-faint text-xs">Dolu slot</div>
                 <div className="text-text">{filledSlots.length}/{teamSize}</div>
-              </div>
-              <div>
-                <div className="text-text-faint text-xs">Toplam puan</div>
-                <div className="text-text">{teamRating}</div>
               </div>
             </div>
             <button

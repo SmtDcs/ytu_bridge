@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: "no_token" }, { status: 401 });
   }
 
-  // Demo token ise sahte repo döndür
+  // Demo token ise sahte repo döndür — config yoksa demo kalır
   if (token === "ghp_demo_token") {
     return NextResponse.json({
       login: "demo-user",

@@ -44,20 +44,12 @@ export function MemberCard({ member }: { member: SeedMember }) {
         )}
       </div>
 
-      {/* Alt: rating + geçmiş */}
+      {/* Alt: geçmiş */}
       <div className="flex items-center justify-between pt-3 border-t border-line-soft">
-        <div className="flex items-baseline gap-1.5">
-          <span className="font-mono text-base font-semibold text-text">
-            {member.internalRating}
-          </span>
-          <span className="text-[0.62rem] text-text-faint">puan</span>
-        </div>
-        <div className="text-right">
-          <div className="text-[13px] text-text-soft">{member.hackathonCount} hackathon</div>
-          {member.bestResult && member.bestResult !== "participated" && (
-            <div className="text-[0.62rem] text-ink">en iyi: {member.bestResult}</div>
-          )}
-        </div>
+        <div className="text-[13px] text-text-soft">{member.hackathonCount} hackathon</div>
+        {member.bestResult && member.bestResult !== "participated" && (
+          <div className="text-[0.62rem] text-ink">en iyi: {member.bestResult}</div>
+        )}
       </div>
     </Link>
   );

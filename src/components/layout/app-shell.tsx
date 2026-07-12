@@ -73,7 +73,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
       {/* Main */}
       <div className="flex-1 min-w-0 flex flex-col">
-        <header className="sticky top-0 z-20 flex items-center justify-between h-16 px-6 border-b border-line bg-canvas/90 backdrop-blur-sm">
+        <header className="sticky top-0 z-20 flex items-center justify-between h-16 px-4 sm:px-6 border-b border-line bg-canvas/90 backdrop-blur-sm">
           <div className="flex items-center gap-2 md:hidden">
             <BridgeMark className="h-6 w-6" />
             <span className="font-semibold text-text">Bridge</span>
@@ -87,10 +87,37 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             </div>
           </div>
         </header>
-        <main className="flex-1 px-6 py-8 max-w-[1400px] w-full mx-auto">
+        <main className="flex-1 px-4 sm:px-6 py-6 sm:py-8 max-w-[1400px] w-full mx-auto pb-24 md:pb-8">
           {children}
         </main>
       </div>
+
+      {/* Mobil alt nav çubuğu — telefonda sidebar gizli olduğu için */}
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-30 bg-surface border-t border-line safe-bottom">
+        <ul className="flex items-center justify-around h-16">
+          {NAV.map((item) => (
+            <li key={item.href}>
+              <Link
+                href={item.href}
+                className="group flex flex-col items-center gap-0.5 px-2 py-1.5 text-text-faint hover:text-text transition-colors"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.6"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="h-5 w-5"
+                >
+                  {ICONS[item.icon]}
+                </svg>
+                <span className="text-[0.6rem] leading-none">{item.label}</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </nav>
     </div>
   );
 }

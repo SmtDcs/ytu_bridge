@@ -12,7 +12,6 @@ const AVAILABILITY_OPTIONS: { value: AvailabilityStatus | "all"; label: string }
 ];
 
 const SORT_OPTIONS = [
-  { value: "rating", label: "Puana göre" },
   { value: "availability", label: "Müsaitlik" },
   { value: "name", label: "İsim (A-Z)" },
   { value: "experience", label: "Tecrübe" },
@@ -24,7 +23,7 @@ export function FilterBar({ members }: { members: SeedMember[] }) {
   const [query, setQuery] = useState("");
   const [skill, setSkill] = useState("all");
   const [availability, setAvailability] = useState<AvailabilityStatus | "all">("all");
-  const [sort, setSort] = useState<SortValue>("rating");
+  const [sort, setSort] = useState<SortValue>("availability");
 
   const allSkills = useMemo(() => {
     const s = new Set<string>();
@@ -49,7 +48,6 @@ export function FilterBar({ members }: { members: SeedMember[] }) {
     });
 
     result = [...result].sort((a, b) => {
-      if (sort === "rating") return b.internalRating - a.internalRating;
       if (sort === "name") return a.fullName.localeCompare(b.fullName, "tr");
       if (sort === "experience") return b.hackathonCount - a.hackathonCount;
       if (sort === "availability") {

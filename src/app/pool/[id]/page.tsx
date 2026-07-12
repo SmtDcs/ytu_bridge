@@ -60,14 +60,10 @@ async function DetailContent({ params }: { params: Promise<{ id: string }> }) {
               </div>
             )}
           </div>
-          <div className="text-right shrink-0">
-            <div className="font-mono text-3xl font-semibold text-text">{member.internalRating}</div>
-            <div className="text-xs text-text-faint mt-1">puan</div>
-          </div>
         </div>
       </div>
 
-      <div className="grid lg:grid-cols-[1.5fr_1fr] gap-4">
+      <div className="grid md:grid-cols-[1.5fr_1fr] gap-4">
         {/* Skill'ler */}
         <div className="card p-5">
           <h2 className="text-sm font-medium text-text mb-4">Beceriler · {member.skills.length}</h2>
