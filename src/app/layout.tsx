@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import { AppShell } from "@/components/layout/app-shell";
 
 const sans = Inter({
   variable: "--font-sans",
@@ -31,10 +32,13 @@ export default function RootLayout({
       lang="tr"
       className={`${sans.variable} ${mono.variable} h-full antialiased`}
     >
-      <body className="min-h-full">{children}</body>
+      <body className="min-h-full">
+        <AppShell>{children}</AppShell>
+      </body>
     </html>
   );
 }
+
 
 
 
