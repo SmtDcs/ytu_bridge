@@ -2,6 +2,7 @@ import { SEED_PROJECTS } from "@/lib/seed-projects";
 import { DISCOVERED_HACKATHONS } from "@/lib/discovered-hackathons";
 import { scoreProjectFit } from "@/lib/seed-projects";
 import { ProjectCard } from "@/components/project-card";
+import { GitHubConnector } from "@/components/github-connector";
 
 export default function ProjectsPage() {
   // Her proje için en uygun hackathon'u bul
@@ -16,6 +17,9 @@ export default function ProjectsPage() {
           hesaplanır — track, zincir ve tech stack örtüşmesine göre.
         </p>
       </div>
+
+      {/* GitHub entegrasyonu — kendi projelerini getir */}
+      <GitHubConnector />
 
       {/* Envanter */}
       <div>
