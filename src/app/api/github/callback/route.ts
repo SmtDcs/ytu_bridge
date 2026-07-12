@@ -15,11 +15,9 @@ export async function GET(request: NextRequest) {
   const clientId = process.env.GITHUB_CLIENT_ID;
   const clientSecret = process.env.GITHUB_CLIENT_SECRET;
 
-  // Config yoksa demo mode — sahte token ile devam (test için)
+  // Config yoksa hata döndür (demo mode kapalı)
   if (!clientId || !clientSecret) {
-    return NextResponse.redirect(
-      `${origin}${redirect}?gh_demo=1&token=ghp_demo_token`
-    );
+    return NextResponse.redirect(`${origin}/projects?error=gh_not_configured`);
   }
 
   try {

@@ -106,11 +106,6 @@ export function GitHubConnector() {
 
   function handleConnect() {
     const clientId = process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID;
-    if (!clientId) {
-      // Demo mode — direkt callback'e git
-      window.location.href = "/api/github/callback?code=demo&state=/projects";
-      return;
-    }
     const redirect = `${window.location.origin}/api/github/callback`;
     window.location.href = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${redirect}&scope=repo&state=/projects`;
   }
