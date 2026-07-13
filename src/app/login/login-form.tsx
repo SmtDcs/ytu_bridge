@@ -14,6 +14,24 @@ export function LoginForm() {
   const [error, setError] = useState<string | null>(null);
   const supabase = createClient();
 
+  // Auth sonrası yönlendirme: members tablosunda profil var mı?
+  // Yoksa → profile-setup, varsa → ana sayfa (admin dahil)
+  async function redirectAfterAuth() {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) { router.push("/login"); return; }
+    const { data: member } = await supabase
+      .from("members")
+      .select("id")
+      .eq("id", user.id)
+      .maybeSingle();
+    if (member) {
+      router.push("/");
+    } else {
+      router.push("/profile-setup");
+    }
+    router.refresh();
+  }
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
@@ -42,18 +60,15 @@ export function LoginForm() {
       }
       // Autoconfirm true → session gelir. Yoksa manuel login dene.
       if (data.session) {
-        router.push("/profile-setup");
-        router.refresh();
+        await redirectAfterAuth();
       } else {
-        // Session yoksa signIn ile giriş yap
         const { error: signInError } = await supabase.auth.signInWithPassword({ email, password });
-        setLoading(false);
         if (signInError) {
+          setLoading(false);
           setError("Hesap oluşturuldu ama giriş yapılamadı. Giriş yap sekmesinden dene.");
           return;
         }
-        router.push("/profile-setup");
-        router.refresh();
+        await redirectAfterAuth();
       }
     } else {
       // Giriş — mevcut hesapla
@@ -63,8 +78,7 @@ export function LoginForm() {
         setError(error.message);
         return;
       }
-      router.push("/");
-      router.refresh();
+      await redirectAfterAuth();
     }
   }
 
