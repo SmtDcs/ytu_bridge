@@ -35,12 +35,23 @@ export function LoginForm() {
 
       // Kayıt — hesap oluştur
       const { data, error } = await supabase.auth.signUp({ email, password });
-      setLoading(false);
       if (error) {
+        setLoading(false);
         setError(error.message);
         return;
       }
-      if (data.user) {
+      // Autoconfirm true → session gelir. Yoksa manuel login dene.
+      if (data.session) {
+        router.push("/profile-setup");
+        router.refresh();
+      } else {
+        // Session yoksa signIn ile giriş yap
+        const { error: signInError } = await supabase.auth.signInWithPassword({ email, password });
+        setLoading(false);
+        if (signInError) {
+          setError("Hesap oluşturuldu ama giriş yapılamadı. Giriş yap sekmesinden dene.");
+          return;
+        }
         router.push("/profile-setup");
         router.refresh();
       }
